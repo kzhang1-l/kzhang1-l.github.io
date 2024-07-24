@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tip Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .input-group {
+            margin-bottom: 10px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Tip Calculator</h2>
+        <div class="input-group">
+            <label for="principal">Enter the consumption amount:</label>
+            <input type="number" id="principal" step="0.01">
+        </div>
+        <div class="input-group">
+            <label for="tipPercentage">Enter the tip percentage:</label>
+            <input type="number" id="tipPercentage" step="0.01">
+        </div>
+        <button class="button" onclick="calculateTip()">Calculate</button>
+        <div id="result" style="margin-top: 10px;"></div>
+    </div>
+
+    <script>
+        function calculateTip() {
+            var principal = parseFloat(document.getElementById('principal').value);
+            var tipPercentage = parseFloat(document.getElementById('tipPercentage').value);
+            
+            var tipAmount = principal * (tipPercentage / 100);
+            var totalAmount = principal + tipAmount;
+            var targetDigit = new Date().getDate() % 10;
+            
+            while (sumOfDigits(totalAmount) % targetDigit !== 0) {
+                totalAmount += 0.01;
+                totalAmount = Math.round(totalAmount * 100) / 100;
+            }
+            var tipAmount=totalAmount-principal;
+            var tipAmountText = "<p>The tip amount is: $" + tipAmount.toFixed(2) + "</p>";
+            var finalAmountText = "<p>The final amount is: $" + totalAmount.toFixed(2) + "</p>";
+            
+            document.getElementById('result').innerHTML = tipAmountText + finalAmountText;
+        }
+
+        function sumOfDigits(n) {
+            var sum = 0;
+            var digits = n.toString().split('');
+            digits.forEach(function(digit) {
+                if (!isNaN(parseInt(digit))) {
+                    sum += parseInt(digit);
+                }
+            });
+            return sum;
+        }
+    </script>
+</body>
+</html>
