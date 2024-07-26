@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
             font-family: Arial, sans-serif;
             margin: 20px;
         }
+
         .container {
             max-width: 600px;
             margin: auto;
@@ -17,13 +19,16 @@
             border-radius: 5px;
             background-color: #f9f9f9;
         }
+
         .input-group {
             margin-bottom: 10px;
         }
+
         .input-group label {
             display: block;
             margin-bottom: 5px;
         }
+
         .input-group input {
             width: 100%;
             padding: 8px;
@@ -32,6 +37,7 @@
             border-radius: 4px;
             box-sizing: border-box;
         }
+
         .button {
             background-color: #4CAF50;
             color: white;
@@ -43,11 +49,13 @@
             border-radius: 4px;
             cursor: pointer;
         }
+
         .button:hover {
             background-color: #45a049;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h2>Tip Calculator</h2>
@@ -67,32 +75,39 @@
         function calculateTip() {
             var principal = parseFloat(document.getElementById('principal').value);
             var tipPercentage = parseFloat(document.getElementById('tipPercentage').value);
-            
+
             var tipAmount = principal * (tipPercentage / 100);
             var totalAmount = principal + tipAmount;
             var targetDigit = new Date().getDate() % 10;
-            
+            tipAmount = Math.floor(tipAmount * 100) / 100;
+            totalAmount = Math.floor(totalAmount * 100) / 100;
             if (targetDigit === 0) {
                 targetDigit = 9;
             } else if (targetDigit === 1) {
                 targetDigit = 2;
             }
-            
+
             while (sumOfDigits(totalAmount) % targetDigit !== 0) {
                 totalAmount += 0.01;
+                tipAmount = Math.floor(tipAmount * 100) / 100;
+                totalAmount = Math.floor(totalAmount * 100) / 100;
                 totalAmount = Math.round(totalAmount * 100) / 100;
+                tipAmount = Math.floor(tipAmount * 100) / 100;
+                totalAmount = Math.floor(totalAmount * 100) / 100;
             }
-            var tipAmount=totalAmount-principal;
+            tipAmount = Math.floor(tipAmount * 100) / 100;
+            totalAmount = Math.floor(totalAmount * 100) / 100;
+            var tipAmount = totalAmount - principal;
             var tipAmountText = "<p>The tip amount is: $" + tipAmount.toFixed(2) + "</p>";
             var finalAmountText = "<p>The final amount is: $" + totalAmount.toFixed(2) + "</p>";
-            
+
             document.getElementById('result').innerHTML = tipAmountText + finalAmountText;
         }
 
         function sumOfDigits(n) {
             var sum = 0;
             var digits = n.toString().split('');
-            digits.forEach(function(digit) {
+            digits.forEach(function (digit) {
                 if (!isNaN(parseInt(digit))) {
                     sum += parseInt(digit);
                 }
@@ -101,4 +116,5 @@
         }
     </script>
 </body>
+
 </html>
